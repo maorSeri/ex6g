@@ -36,7 +36,6 @@ vector<Trip*>TaxiCenter:: getVecTrips(){
  * adds a new driver to the taxi station.
  */
 void TaxiCenter::insertDriver(Tcp* socket) {
-    cout<<"server: task 1"<<endl;
     //get amount of cabs.
     //int clDescriptor;
     int amount;
@@ -45,17 +44,16 @@ void TaxiCenter::insertDriver(Tcp* socket) {
 
     //THREADS
     pthread_t threadArr[amount];
-   // struct thread_data td[amount];
-
-
+    // struct thread_data td[amount];
+    vector<thread_data*> saveTd;
     //receive driver from cline.
     for(int i=0;i<amount;i++) {
         //THREADS
         thread_data* td = new thread_data();
+        saveTd.push_back(td);
         td->thread_id = i;
         td->taxiCenter = this;
         td->socket = socket;
-        cout << "server : creating thread: " << i << endl;
         rc = pthread_create(&threadArr[i], NULL, OpenThread, (void *)td);
 
         if (rc){
@@ -80,8 +78,9 @@ void TaxiCenter::insertDriver(Tcp* socket) {
     }
     for (int i=0;i<amount;i++) {
         pthread_join(threadArr[i], NULL);
+        delete saveTd.at(i);
     }
-  //  pthread_exit(NULL);
+    //  pthread_exit(NULL);
 
 }
 
@@ -156,7 +155,7 @@ void TaxiCenter::startRide() {
     unsigned long int i = 0;
     while((i < this->drivers.size())&&(!trips.empty())){
         driver = this->whosAt(this->trips[0]->getStart());
-      //  driver->updateBusy();
+        //  driver->updateBusy();
         driver->driveTo(this->trips.at(0)->getEnd());
         tempForDelete = this->trips[0];
         this->trips.erase(this->trips.begin());
@@ -201,6 +200,7 @@ void TaxiCenter::activateClock(Tcp* socket) {
     pthread_mutex_init(&mtx, 0);
     Trip* iTrip = NULL;
     Driver* driver = NULL;
+    vector<thread_data*> saveTd;
     int i = 0;
     //erase from the vector the trips that already "start driving"
     for(int i = 0; i < this->trips.size(); i++){
@@ -209,8 +209,7 @@ void TaxiCenter::activateClock(Tcp* socket) {
             i--;
         }
     }
-    //find the trip at current time.
-    cout<<"activateClock: after erasing trip"<<endl;
+    //find the trip at current time
     while (i < this->trips.size()) {
         iTrip = this->trips[i];
         //fined the driver in loucaiton of the trip.
@@ -235,7 +234,6 @@ void TaxiCenter::activateClock(Tcp* socket) {
     }
     //active the clock!.
     this->time++;
-    cout<<"activateClock: get hear"<<endl;
     //THREAD
     int rc;
     pthread_t threadArr[this->drivers.size()];
@@ -250,13 +248,13 @@ void TaxiCenter::activateClock(Tcp* socket) {
 
             //THREAD
             thread_data* td = new thread_data();
+            saveTd.push_back(td);
             td->thread_id = j;
             td->taxiCenter = this;
             td->socket = socket;
 
 
 
-            cout << "server : (want send location "<<  this->drivers[j]->getLocation() << ") creating thread: " << j << endl;
             rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
 
             if (rc){
@@ -278,15 +276,12 @@ void TaxiCenter::activateClock(Tcp* socket) {
         }
 
     }
-cout<<"aaa"<<endl;
     for (int i=0;i<numThread;i++) {
-        cout<<"bbb"<<endl;
         //pthread_mutex_lock(&myMutex);
         pthread_join(threadArr[i], NULL);
+        delete saveTd.at(i);
         //pthread_mutex_unlock(&myMutex);
-        cout<<"ccc"<<endl;
     }
-    cout << "** after join  **" << endl;
 
 
 
@@ -371,11 +366,9 @@ void * TaxiCenter::OpenThread(void* data) {
     my_socket->sendData("server: waiting for driver." ,clDescriptor);
     Driver *driver = taxiCenter->receiveDriver(my_socket, clDescriptor);
     driver->setClDescriptor(clDescriptor);
-    cout << "server: driver received. (thread "<< id <<")"<< endl;
     my_socket->sendData("server: sending cab driver.",clDescriptor);
     taxiCenter->waitForCl(my_socket, clDescriptor);
     taxiCenter->sendTaxi(driver, my_socket, clDescriptor);
-    cout << "server: cab sent. (thread "<< id <<")"<< endl;
 
 }
 
@@ -394,6 +387,5 @@ void * TaxiCenter::SLocThread(void* data) {
     my_socket->sendData("server: sending location.",clDescriptor);
     taxiCenter->waitForCl(my_socket, clDescriptor);
     taxiCenter->sendDriverLocation(taxiCenter->drivers[id]->getLocation(),my_socket, clDescriptor);
-    cout<<"server: "<<taxiCenter->drivers[id]->getLocation() <<" sent. (thread "<< id <<")"<< endl;
 
 }

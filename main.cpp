@@ -40,22 +40,18 @@ int main(int argc, char *argv[]){
         switch(oper){
             //insert driver.
             case 1:
-                cout<<"     case 1:     insertDriver"<<endl;
                 manager.insertDriver((Tcp*)socket);
                 break;
                 //insert a new ride.
             case 2:
-                cout<<"     case 2:     insertTrip"<<endl;
                 manager.insertTrip();
                 break;
                 //insert a vehicle.
             case 3:
-                cout<<"     case 3:     insertCab"<<endl;
                 manager.insertCab();
                 break;
                 //returns a drivers location.
             case 4:
-                cout<<"     case 4:     print Location"<<endl;
                 manager.driverLocation();
                 break;
                 //starts a ride.
@@ -64,11 +60,9 @@ int main(int argc, char *argv[]){
                 break;
                 //exit program.
             case 7:
-                cout<<"     case 7:     close"<<endl;
                 break;
                 //advance the clock time
             case 9:
-                cout<<"     case 9:     activate clock"<<endl;
                 manager.activateClock((Tcp*)socket);
                 break;
 
