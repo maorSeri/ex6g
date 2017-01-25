@@ -1,0 +1,230 @@
+* commit 51085df13d3dda16dc0fd5c41bb08cc6100c479c
+| Author: maor <maorroam14@gmail.com>
+| Date:   Wed Jan 18 22:24:01 2017 +0200
+| 
+|     worckkkkkk!!!!!!!!!!!!!!
+|    
+*   commit d7b1e571660a15d923d65e5f21d8a49cb7a089a4
+|\  Merge: 76e24ef f97c7f1
+| | Author: maor <maorroam14@gmail.com>
+| | Date:   Wed Jan 18 22:04:02 2017 +0200
+| | 
+| |     Merge remote-tracking branch 'origin/yuval' into maor
+| |     
+| |     # Conflicts:
+| |     #	TaxiCenter.cpp
+| |   
+| * commit f97c7f19c8aba66f191171fd7b1b6ecf8a582d98
+| | Author: yuval <yuval134@gmail.com>
+| | Date:   Wed Jan 18 20:13:41 2017 +0200
+| | 
+| |     try threads. work part 1. try part 2
+| |   
+| * commit 00b43cec38b9651f5e2e7987503a10b1486375dd
+| | Author: yuval <yuval134@gmail.com>
+| | Date:   Wed Jan 18 20:05:33 2017 +0200
+| | 
+| |     try threads. work part 1. try part 2
+| |   
+* | commit 76e24ef2a1cf69c532b324962fb50aa818c5039a
+| | Author: maor <maorroam14@gmail.com>
+| | Date:   Wed Jan 18 20:18:28 2017 +0200
+| | 
+| |     the tcp worcks whith out the two first massages and begging of thread
+| |     
+* |   commit 0e399b7ef307506f1959d6765e3ef3d418cb493d
+|\ \  Merge: 9fce112 de23824
+| | | Author: maor <maorroam14@gmail.com>
+| | | Date:   Wed Jan 18 15:59:55 2017 +0200
+| | | 
+| | |     Merge remote-tracking branch 'origin/master' into maor
+| | |     
+| | |     # Conflicts:
+| | |     #	DriverClient.cpp
+| | |     #	TaxiCenter.cpp
+| | |     #	TaxiCenter.h
+| | |     #	main.cpp
+| | |      
+| * |   commit de238248f041923fd4fbf3fce58ebaab84e51d9d
+| |\ \  Merge: f8bcc8e 6eb9e16
+| | |/  Author: yuval <yuval134@gmail.com>
+| | |   Date:   Wed Jan 18 15:49:09 2017 +0200
+| | |   
+| | |       Merge remote-tracking branch 'origin/yuval'
+| | |       
+| | |       # Conflicts:
+| | |       #	DriverClient.cpp
+| | |       #	TaxiCenter.cpp
+| | |    
+| | * commit 6eb9e16b54f1f4eeba3d1aece73ed5e1a2320b8d
+| | | Author: yuval <yuval134@gmail.com>
+| | | Date:   Wed Jan 18 15:46:11 2017 +0200
+| | | 
+| | |     try threads. work part 1. try part 2
+| | |    
+| | * commit 600b1d278a47b496536ee43b197555e886cbdfa5
+| | | Author: yuval <yuval134@gmail.com>
+| | | Date:   Wed Jan 18 13:17:01 2017 +0200
+| | | 
+| | |     try threads. work part 1. try part 2
+| | |    
+| | * commit ec54b9e3a611afffe863b18a3ba035ee84feed3c
+| | | Author: yuval <yuval134@gmail.com>
+| | | Date:   Wed Jan 18 10:58:53 2017 +0200
+| | | 
+| | |     try threads. work part 1
+| | |    
+| | * commit 97b31ecc20be8ac6d788051b3f95918ab3220c73
+| | | Author: yuval <yuval134@gmail.com>
+| | | Date:   Wed Jan 18 01:54:43 2017 +0200
+| | | 
+| | |     try threads
+| | |    
+| | * commit 2f9350905f1bf325f752463b717ae5e3aae937a3
+| | | Author: yuval <yuval134@gmail.com>
+| | | Date:   Wed Jan 18 00:10:23 2017 +0200
+| | | 
+| | |     tcp work+ not using sleep
+| | |    
+| * | commit f8bcc8ea202e00ae35402e68c4511cea9a017fb2
+| | | Author: yuval <yuval134@gmail.com>
+| | | Date:   Tue Jan 17 23:30:19 2017 +0200
+| | | 
+| | |     tcp work
+| | |    
+* | | commit 9fce112c7df012ba8f373e6ae81de8bdafc5d02b
+| | | Author: maor <maorroam14@gmail.com>
+| | | Date:   Wed Jan 18 14:50:17 2017 +0200
+| | | 
+| | |     the tcp worcks whith out the two first massages and begging of thread
+| | |    
+* | | commit 7b5f17ff679ca4499cc23211f3a2a51fd75ab076
+|/ /  Author: maor <maorroam14@gmail.com>
+| |   Date:   Wed Jan 18 12:57:22 2017 +0200
+| |   
+| |       the tcp worcks whith out the two first masseges
+| |   
+* | commit 1f4a405a59e37fa8f281cb1ffb48bba4ebe1893d
+| | Author: maor <maorroam14@gmail.com>
+| | Date:   Tue Jan 17 20:47:44 2017 +0200
+| | 
+| |     the tcp worcks whith out the two first masseges
+| |     
+* |   commit 3c26d69d4aedffcae7236ddd8b3f89b17cff6443
+|\ \  Merge: a727e7c 5c8f076
+| |/  Author: maor <maorroam14@gmail.com>
+| |   Date:   Tue Jan 17 20:09:05 2017 +0200
+| |   
+| |       Merge remote-tracking branch 'origin/yuval'
+| |       
+| |       # Conflicts:
+| |       #	DriverClient.cpp
+| |       #	TaxiCenter.cpp
+| |       #	TaxiCenter.h
+| |   
+| * commit 5c8f07631157db70e662d35d5f3c5ed0b3feef2d
+| | Author: yuval <yuval134@gmail.com>
+| | Date:   Tue Jan 17 02:21:36 2017 +0200
+| | 
+| |     tcp work
+| |   
+* | commit a727e7c7e3a75b37baa308be20f62a5ccfbc59aa
+| | Author: maor <maorroam14@gmail.com>
+| | Date:   Tue Jan 17 20:04:55 2017 +0200
+| | 
+| |     sdfgjk
+| |     
+* |   commit 00b3e456d4a4963db3d73e8f5ae3515d21abd549
+|\ \  Merge: 3c653eb 941fbdf
+| |/  Author: maor <maorroam14@gmail.com>
+| |   Date:   Sun Jan 15 22:27:44 2017 +0200
+| |   
+| |       Merge remote-tracking branch 'origin/master'
+| |   
+| * commit 941fbdf4484c3756c87f6d4f3c2aa525d20a555c
+| | Author: yuval <yuval134@gmail.com>
+| | Date:   Sun Jan 15 22:27:24 2017 +0200
+| | 
+| |     add get clDescriptor
+| |     
+* |   commit 3c653ebdfdfc1c7876d5bebbce2895cba229723e
+|\ \  Merge: a49c6f5 09f484d
+| |/  Author: maor <maorroam14@gmail.com>
+| |   Date:   Sun Jan 15 21:48:20 2017 +0200
+| |   
+| |       Merge remote-tracking branch 'origin/master'
+| |   
+| * commit 09f484d2c40f1e417c77f68bcf9d5d5e3c44742d
+| | Author: yuval <yuval134@gmail.com>
+| | Date:   Sun Jan 15 21:48:05 2017 +0200
+| | 
+| |     add get clDescriptor
+| |   
+* | commit a49c6f52da7b856a5556003785680cd0821199b6
+|/  Author: maor <maorroam14@gmail.com>
+|   Date:   Sun Jan 15 21:46:21 2017 +0200
+|   
+|       Merge branch 'master' of /home/maor/ClionProjects/ex5 with conflicts.
+|  
+* commit 728f2686faa2fc3428ebde246ca705e9102b8c1a
+| Author: yuval <yuval134@gmail.com>
+| Date:   Sun Jan 15 21:43:41 2017 +0200
+| 
+|     add get clDescriptor
+|  
+* commit ee4f91b0628de464c0057aa40e2d4d035e874944
+| Author: yuval <yuval134@gmail.com>
+| Date:   Sun Jan 15 21:10:38 2017 +0200
+| 
+|     changes for tcp
+|  
+* commit 4eff040bf9c63abb1248c16ab3a9c91314230ba5
+| Author: yuval <yuval134@gmail.com>
+| Date:   Sun Jan 15 17:17:35 2017 +0200
+| 
+|     changes for tcp
+|  
+* commit d4335764b4f605527c494fe16df0e4cca05b9aa7
+| Author: yuval <yuval134@gmail.com>
+| Date:   Sun Jan 15 16:07:05 2017 +0200
+| 
+|     changes for tcp
+|  
+* commit 5361d4a06097c5e80b5a371ca45e3a2f74dcb30f
+| Author: yuval <yuval134@gmail.com>
+| Date:   Sun Jan 15 16:05:54 2017 +0200
+| 
+|     הערה
+|    
+*   commit cdf191e07b18ee769af9b89b8d7dbc64b3b3a53d
+|\  Merge: fc7159a 92ee966
+| | Author: yuval134 <yuval134@gmail.com>
+| | Date:   Sun Jan 15 15:24:27 2017 +0200
+| | 
+| |     Merge pull request #1 from yuval134/maor
+| |     
+| |     Maor tcp
+| |   
+| * commit 92ee9667bdd7941b4f6bc1289f0ddb721b5775f0
+| | Author: maor <maorroam14@gmail.com>
+| | Date:   Sun Jan 15 15:14:07 2017 +0200
+| | 
+| |     sdfgjk
+| |   
+| * commit fc989fc9c3203d149da15dd1e32daf141ad51ff2
+|/  Author: maor <maorroam14@gmail.com>
+|   Date:   Thu Jan 12 15:09:39 2017 +0200
+|   
+|       sdfgjk
+|  
+* commit fc7159abff44b02cd35c9437736d1ea632637a9e
+| Author: yuval <yuval134@gmail.com>
+| Date:   Tue Jan 10 15:53:18 2017 +0200
+| 
+|     הערה
+|  
+* commit 6d8ee13d546f9d39dcb3c9d9f6ee1942f2b66bd6
+  Author: yuval <yuval134@gmail.com>
+  Date:   Tue Jan 10 15:05:27 2017 +0200
+  
+      start
