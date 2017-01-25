@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(ex5)
+project(ex6)
 
 set(core_sockets sockets/Socket.cpp sockets/Udp.cpp sockets/Tcp.cpp)
 
