@@ -31,32 +31,24 @@ int main(int argc, char *argv[]) {
                 //DriverClient client;
                 driver = createDriver();
                 sendDriver(driver, socket);
-                cout << "client: driver sent" << endl;
                 break;
             case 'C':
                 //delit befor subbmition.
-                cout << "bbb" << endl;
                 socket->sendData("client: I'm in receive state.");
-                cout << "fff" << endl;
                 driversCab = receiveCab(socket);
                 driver->setTaxi(driversCab);
-                cout << "client: cab recived" << endl;
                 break;
             case 'G':
                 socket->sendData("client: I'm in receive state.");
                 location = receiveNewLocation(socket);
-                cout << "client: location recived" << location << endl;
-                //delete driver->getLocation();
+                delete driver->getLocation();
                 driver->setLocation(location);
                 break;
             default:
                 break;
         }
-        cout << "wait for task" << endl;
         socket->sendData("client: I'm in receive state.");
         task=getTask(socket);
-        cout << "task:"<< task<<endl;
-
     }
 
     delete driver->getLocation();
