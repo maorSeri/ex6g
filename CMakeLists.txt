@@ -25,7 +25,7 @@ set(SOURCE_FILES
         StandartCab.cpp StandartCab.h
         TaxiCenter.cpp TaxiCenter.h
         Trip.cpp Trip.h
-        Input.cpp Input.h)
+        Input.cpp Input.h Task.cpp Task.h ThreadPool.h ThreadPool.cpp)
 
 add_executable(client DriverClient.cpp ${SOURCE_FILES})
 add_executable(main main.cpp ${SOURCE_FILES})
