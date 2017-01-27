@@ -58,8 +58,8 @@ int main(int argc, char *argv[]){
                 break;
 
             default:
+                    cout<<"-1"<<endl;
                 break;
-
         }
     }while(oper!=7);
 
