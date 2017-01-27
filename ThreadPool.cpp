@@ -36,8 +36,8 @@ ThreadPool::ThreadPool(int pool_size) {
 ThreadPool::~ThreadPool() {
 
     for (int i = 0; i < m_pool_size; i++) {
-        cout << "need care about delete" << endl;
-        pthread_join(m_threads[i], NULL);
+        //cout << "need care about delete" << endl;
+       // pthread_join(m_threads[i], NULL);
     }
     cout << m_pool_size << " threads exited from the thread pool" << endl;
 }
