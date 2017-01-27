@@ -56,7 +56,7 @@ public:
 
     static void * OpenThread(void* data);
 
-    static void *SLocThread(void *data);
+    static void SLocThread(void *data);
 };
 
 

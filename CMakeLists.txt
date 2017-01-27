@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(ex5)
+project(ex6)
 
 set(core_sockets sockets/Socket.cpp sockets/Udp.cpp sockets/Tcp.cpp)
 
@@ -25,7 +25,7 @@ set(SOURCE_FILES
         StandartCab.cpp StandartCab.h
         TaxiCenter.cpp TaxiCenter.h
         Trip.cpp Trip.h
-        Input.cpp Input.h)
+        Input.cpp Input.h Task.cpp Task.h ThreadPool.h ThreadPool.cpp)
 
 add_executable(client DriverClient.cpp ${SOURCE_FILES})
 add_executable(main main.cpp ${SOURCE_FILES})
