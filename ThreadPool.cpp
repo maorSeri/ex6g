@@ -21,6 +21,7 @@ void* start_thread(void* arg)
 
 ThreadPool::ThreadPool(int pool_size) {
 
+    pthread_mutex_init(&lock,NULL);
     this->m_pool_size = pool_size;
 
     for (int i = 0; i < m_pool_size; i++) {
@@ -45,10 +46,18 @@ ThreadPool::~ThreadPool() {
 void *ThreadPool::execute_thread() {
     Task* task = NULL;
     while(true) {
-        while (m_tasks.empty()){ sleep(1); }
-        task = m_tasks.front();
-        m_tasks.pop_front();
-        (*task)();
+        pthread_mutex_lock(&lock);
+        if (m_tasks.empty()){
+            pthread_mutex_unlock(&lock);
+            sleep(1);
+        } else {
+            task = m_tasks.front();
+            m_tasks.pop_front();
+            pthread_mutex_unlock(&lock);
+            (*task)();
+
+        }
+
     }
     return NULL;
 }

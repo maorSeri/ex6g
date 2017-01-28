@@ -17,6 +17,7 @@ private:
     int m_pool_size;
     std::vector<pthread_t> m_threads;
     std::deque<Task*> m_tasks;
+    pthread_mutex_t lock;
 
     /*
     queue<Job *> jobs_queue;

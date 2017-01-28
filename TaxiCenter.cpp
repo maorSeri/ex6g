@@ -3,14 +3,8 @@
 //
 
 #include "TaxiCenter.h"
-#include "ThreadPool.h"
 
 //THREAD
-struct thread_data{
-    int  thread_id;
-    TaxiCenter* taxiCenter;
-    Tcp* socket;
-};
 
 
 TaxiCenter::TaxiCenter(Map* map) {
@@ -197,7 +191,7 @@ Driver *TaxiCenter::whosAt(Intersection * inter) {
 
 }
 
-void TaxiCenter::activateClock(Tcp* socket) {
+void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
     pthread_mutex_t mtx;
     pthread_mutex_init(&mtx, 0);
     Trip* iTrip = NULL;
@@ -251,17 +245,16 @@ void TaxiCenter::activateClock(Tcp* socket) {
             //THREAD
             thread_data* td = new thread_data();
             saveTd.push_back(td);
-            td->thread_id = j;
+`1  1            td->thread_id = j;
             td->taxiCenter = this;
             td->socket = socket;
 
 
-            ThreadPool tPool(5);
             //rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
 
 
-            Task* t = new Task(&SLocThread, NULL);
-            tPool.add_task(t);
+            Task* t = new Task(&SLocThread, (void *)td);
+            tPool->add_task(t);
             /*
             if (rc){
                 cout << "Error:unable to create thread," << rc << endl;
@@ -365,7 +358,7 @@ void * TaxiCenter::OpenThread(void* data) {
     struct thread_data* my_data;
     my_data = (struct thread_data*)data;
     Tcp* my_socket = my_data->socket;
-    int id = my_data->thread_id;
+    //int id = my_data->thread_id;
     TaxiCenter* taxiCenter = my_data->taxiCenter;
 
     clDescriptor = my_socket->acceptOneClient();

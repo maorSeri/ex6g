@@ -15,6 +15,8 @@
 #include "BFS.h"
 #include "sockets/Tcp.h"
 #include <mutex>
+#include "ThreadPool.h"
+
 
 using namespace std;
 using namespace boost::archive;
@@ -26,6 +28,13 @@ private:
     vector<Cab*> cabs;
     vector<Trip*> trips;
     int time;
+
+    struct thread_data{
+        int thread_id;
+        TaxiCenter* taxiCenter;
+        Tcp* socket;
+    };
+
 public:
     TaxiCenter(Map* map);
     //getters
@@ -48,7 +57,7 @@ public:
     virtual ~TaxiCenter();
     void sendTaxi(Driver* driver,Tcp* socket, int clientDescriptor);
     void sendDriverLocation(Intersection* location, Tcp* socket, int clientDescriptor);
-    void activateClock(Tcp* socket);
+    void activateClock(Tcp* socket, ThreadPool* tPool);
 
     void closeClients(Tcp *socket);
 

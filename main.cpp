@@ -8,6 +8,7 @@
 
 #include "sockets/Tcp.h"
 #include "sockets/Socket.h"
+#include "ThreadPool.h"
 
 #include <cstring>
 
@@ -35,6 +36,9 @@ int main(int argc, char *argv[]){
         grid->addObstacle(m,n);
     }
     int oper;
+
+    ThreadPool* tPool = new ThreadPool(5);
+
     do{
         cin >> oper;
         switch(oper){
@@ -63,7 +67,8 @@ int main(int argc, char *argv[]){
                 break;
                 //advance the clock time
             case 9:
-                manager.activateClock((Tcp*)socket);
+
+                manager.activateClock((Tcp*)socket, tPool);
                 break;
 
             default:
