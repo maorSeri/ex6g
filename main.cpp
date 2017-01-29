@@ -9,6 +9,7 @@
 
 #include "sockets/Tcp.h"
 #include "sockets/Socket.h"
+#include "ThreadPool.h"
 
 #include <cstring>
 
@@ -27,6 +28,9 @@ int main(int argc, char *argv[]){
     socket->initialize();
     string buff;
     int oper;
+
+    ThreadPool* tPool = new ThreadPool(5);
+
     do{
         cin>>oper;
         getline(cin, buff);
@@ -56,7 +60,7 @@ int main(int argc, char *argv[]){
                 break;
                 //advance the clock time
             case 9:
-                manager.activateClock((Tcp*)socket);
+                manager.activateClock((Tcp*)socket, tPool);
                 break;
 
             default:
@@ -66,6 +70,7 @@ int main(int argc, char *argv[]){
     }while(oper!=7);
 
 
+    tPool->terminate();
     manager.closeClients((Tcp*)socket);
 
     delete socket;

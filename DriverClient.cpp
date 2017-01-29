@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
         driver->setTaxi(driversCab);
         cout << "cab receved" << endl;
         Intersection *location = NULL;
+        socket->sendData("client: I'm in receive state.");
         char task = getTask(socket);
         cout << "task receved" << endl;
         while (task != 'Q') {
@@ -129,12 +130,9 @@ char getTask(Tcp* socket){
     unsigned long i = message.find_first_of('.');
     message.assign(message.substr(0, i));
     if(message.compare("server: sending location")==0){
-        cout<<"location"<<endl;
         return 'G';
     }
     if(message.compare("server: closing server")==0){
-        cout<<"Qwit"<<endl;
         return 'Q';
-
     }
 }
