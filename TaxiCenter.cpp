@@ -3,7 +3,7 @@
 //
 
 #include "TaxiCenter.h"
-
+#include "ThreadPool.h"
 
 //THREAD
 
@@ -106,16 +106,21 @@ void TaxiCenter::insertTrip() {
  * adds a new cab to the taxi station.
  */
 void TaxiCenter::insertCab() {
-    int id, taxi_type;
+    /*int id, taxi_type;
     char manufacturer,color;
-    char buff;
+    char buff;*/
     Cab* cab = NULL;
     //gets the cabs details from the consul
-    cin>>id>>buff>>taxi_type>>buff>>manufacturer>>buff>>color;
+    /*cin>>id>>buff>>taxi_type>>buff>>manufacturer>>buff>>color;
     if(taxi_type == 1){
         cab = new StandartCab(id, manufacturer, color);
     } else if(taxi_type == 2){
         cab = new LuxuryCab(id, manufacturer, color);
+    }*/
+    cab=cabsValidation();
+    if(cab==NULL){
+        cout<<"-1"<<endl;
+        return;
     }
     //adds the cab to the taxi station.
     this->cabs.push_back(cab);
@@ -388,11 +393,11 @@ void * TaxiCenter::OpenThread(void* data) {
 
     clDescriptor = my_socket->acceptOneClient();
     //sleep (5);
-    my_socket->sendData("server: waiting for driver." ,clDescriptor);
+    //my_socket->sendData("server: waiting for driver." ,clDescriptor);
     Driver *driver = taxiCenter->receiveDriver(my_socket, clDescriptor);
     driver->setClDescriptor(clDescriptor);
-    my_socket->sendData("server: sending cab driver.",clDescriptor);
-    taxiCenter->waitForCl(my_socket, clDescriptor);
+    //my_socket->sendData("server: sending cab driver.",clDescriptor);
+    //taxiCenter->waitForCl(my_socket, clDescriptor);
     taxiCenter->sendTaxi(driver, my_socket, clDescriptor);
 
 }

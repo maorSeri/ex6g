@@ -1,5 +1,6 @@
 #include <iostream>
 #include "TaxiCenter.h"
+#include "Input.h"
 
 #include <cstdlib>
 #include <pthread.h>
@@ -15,32 +16,24 @@
 
 using namespace std;
 int main(int argc, char *argv[]){
-    //grid m*n
-    int m,n;
-    //number of obstacles
-    int numOfObst;
-    //for un useful char
-    char buffer;
-
-    cin >>m >>n;
-    Grid2D* grid = new Grid2D(m,n);
-    cin >>numOfObst;
+    Grid2D* grid = NULL;
+    while(grid==NULL){
+       grid=gridsValidation();
+        if(grid==NULL){
+            cout<<"-1"<<endl;
+        }
+    }
     TaxiCenter manager = TaxiCenter(grid);
-    //blabla
     Socket* socket = new Tcp(1,atoi(argv[1]));
     socket->initialize();
-    //   manager.createGrid(m,n); //no need, we did it last line.
-    //add the obstacles.
-    for(int i=0; i < numOfObst; i++){
-        cin>> m >> buffer >> n;
-        grid->addObstacle(m,n);
-    }
+    string buff;
     int oper;
 
     ThreadPool* tPool = new ThreadPool(5);
 
     do{
-        cin >> oper;
+        cin>>oper;
+        getline(cin, buff);
         switch(oper){
             //insert driver.
             case 1:
@@ -67,11 +60,11 @@ int main(int argc, char *argv[]){
                 break;
                 //advance the clock time
             case 9:
-
                 manager.activateClock((Tcp*)socket, tPool);
                 break;
 
             default:
+                    cout<<"-1"<<endl;
                 break;
 
         }
