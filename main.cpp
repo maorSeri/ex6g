@@ -25,9 +25,11 @@ int main(int argc, char *argv[]){
     TaxiCenter manager = TaxiCenter(grid);
     Socket* socket = new Tcp(1,atoi(argv[1]));
     socket->initialize();
+    string buff;
     int oper;
     do{
-        cin >> oper;
+        cin>>oper;
+        getline(cin, buff);
         switch(oper){
             //insert driver.
             case 1:

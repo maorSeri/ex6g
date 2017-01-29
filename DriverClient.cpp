@@ -4,6 +4,7 @@
 #include "Driver.h"
 #include "sockets/Udp.h"
 #include "sockets/Tcp.h"
+#include "Input.h"
 
 using namespace std;
 
@@ -17,45 +18,38 @@ char getTask(Tcp* socket);
 int main(int argc, char *argv[]) {
     //creat an socket.
     //blabla
-    Tcp* socket = new Tcp(0, atoi(argv[2]));
-    socket->initialize();
-    char task=getTask(socket);
-    //DriverClient client;
     Driver* driver = NULL;
-    Cab *driversCab=NULL;
-    Intersection *location=NULL;
-    while(task!='Q') {
-        switch(task)
-        {
-            case 'D':
-                //DriverClient client;
-                driver = createDriver();
-                sendDriver(driver, socket);
-                break;
-            case 'C':
-                //delit befor subbmition.
-                socket->sendData("client: I'm in receive state.");
-                driversCab = receiveCab(socket);
-                driver->setTaxi(driversCab);
-                break;
-            case 'G':
-                socket->sendData("client: I'm in receive state.");
-                location = receiveNewLocation(socket);
-                delete driver->getLocation();
-                driver->setLocation(location);
-                break;
-            default:
-                break;
-        }
-        socket->sendData("client: I'm in receive state.");
-        task=getTask(socket);
-    }
+    driver = createDriver();
+    cout<<"driver created"<<endl;
+    if(driver!=NULL) {
+        Tcp *socket = new Tcp(0, atoi(argv[2]));
+        socket->initialize();
+        cout << "initialize" << endl;
+        sendDriver(driver, socket);
+        cout << "driver sent" << endl;
+        Cab *driversCab = NULL;
+        driversCab = receiveCab(socket);
+        driver->setTaxi(driversCab);
+        cout << "cab receved" << endl;
+        Intersection *location = NULL;
+        char task = getTask(socket);
+        cout << "task receved" << endl;
+        while (task != 'Q') {
+            socket->sendData("client: I'm in receive state.");
+            location = receiveNewLocation(socket);
+            delete driver->getLocation();
+            driver->setLocation(location);
+            socket->sendData("client: I'm in receive state.");
+            task = getTask(socket);
+            cout << "task receved" << endl;
 
-    delete driver->getLocation();
-    delete driver->getTaxi();
-    delete driver->getCurentTrip();
-    delete driver;
-    delete socket;
+        }
+        delete driver->getLocation();
+        delete driver->getTaxi();
+        delete driver->getCurentTrip();
+        delete driver;
+        delete socket;
+    }
     return 0;
 }
 
@@ -63,7 +57,7 @@ int main(int argc, char *argv[]) {
 
 Driver* createDriver() {
     //for drivers members.
-    int id,age,experience,vehicleID;
+   int id,age,experience,vehicleID;
     char status;
     char buff;
     Point* start = new Point(0,0);
@@ -71,6 +65,7 @@ Driver* createDriver() {
     cin>>id>>buff>>age>>buff>>status>>buff>>experience>>buff>>vehicleID;
     //create a driver.
     Driver* driver = new Driver(id,age,status,experience,vehicleID,start);
+    //Driver* driver =driversValidation();
     return driver;
 }
 
@@ -133,16 +128,13 @@ char getTask(Tcp* socket){
     string message(buffer);
     unsigned long i = message.find_first_of('.');
     message.assign(message.substr(0, i));
-    if(message.compare("server: waiting for driver")==0){
-        return 'D';
-    }
-    if(message.compare("server: sending cab driver")==0){
-        return 'C';
-    }
     if(message.compare("server: sending location")==0){
+        cout<<"location"<<endl;
         return 'G';
     }
     if(message.compare("server: closing server")==0){
+        cout<<"Qwit"<<endl;
         return 'Q';
+
     }
 }

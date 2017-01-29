@@ -50,6 +50,7 @@ vector<string> splitInput( string input,char spliter) {
  */
 Driver* driversValidation(){
     string input;
+    //getline(cin,input);
     getline(cin,input);
     vector<string> vInput;
     int id,age,experience,vehicleID;
@@ -85,11 +86,13 @@ Driver* driversValidation(){
         return NULL;
     }
     Intersection* start=new Point(0,0);
-    return new Driver(id, age,status,experience,vehicleID,start);
+    Driver* d=new Driver(id, age,status,experience,vehicleID,start);
+    return d;
 }
 
 Cab* cabsValidation() {
     string input;
+    //getline(cin, input);
     getline(cin, input);
     vector<string> vInput;
     if (!lengthValidation(3, input,',')) {
