@@ -78,6 +78,7 @@ int main(int argc, char *argv[]){
     }while(oper!=7);
 
 
+    tPool->terminate();
     manager.closeClients((Tcp*)socket);
 
     delete socket;

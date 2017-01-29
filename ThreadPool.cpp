@@ -8,7 +8,6 @@
 
 using namespace std;
 
-extern "C"
 
 void* start_thread(void* arg)
 {
@@ -21,9 +20,10 @@ void* start_thread(void* arg)
 
 ThreadPool::ThreadPool(int pool_size) {
 
-    pthread_mutex_init(&lock,NULL);
+    this->stop = false;
     this->m_pool_size = pool_size;
-
+    // TODO Auto-generated constructor stub
+    pthread_mutex_init(&lock,NULL);
     for (int i = 0; i < m_pool_size; i++) {
         pthread_t tid;
         int ret = pthread_create(&tid, NULL, start_thread, (void*) this);
@@ -45,25 +45,28 @@ ThreadPool::~ThreadPool() {
 
 void *ThreadPool::execute_thread() {
     Task* task = NULL;
-    while(true) {
+    while(!stop) {
         pthread_mutex_lock(&lock);
-        if (m_tasks.empty()){
-            pthread_mutex_unlock(&lock);
-            sleep(1);
-        } else {
+        if (!m_tasks.empty()){
             task = m_tasks.front();
             m_tasks.pop_front();
             pthread_mutex_unlock(&lock);
             (*task)();
-
+        } else {
+            pthread_mutex_unlock(&lock);
+            sleep(1);
         }
 
     }
-    return NULL;
+    pthread_exit(NULL);
 }
 
 int ThreadPool::add_task(Task *task) {
     m_tasks.push_back(task);
+}
+
+void ThreadPool::terminate() {
+    stop = true;
 }
 
 

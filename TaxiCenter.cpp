@@ -4,6 +4,7 @@
 
 #include "TaxiCenter.h"
 
+
 //THREAD
 
 
@@ -220,6 +221,31 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
                 this->map->reworld();
                 delete bfs;
                 pthread_mutex_unlock(&mtx);
+
+
+                /////////////////////////////////////////////////
+                //THREAD
+                thread_data* td = new thread_data();
+                saveTd.push_back(td);
+                int j = 0;
+                while (this->drivers[j] != driver){
+                    j++;
+                }
+                td->thread_id = j;
+                td->taxiCenter = this;
+                td->socket = socket;
+
+
+                //rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
+
+                Task* t = new Task(&SLocThread, (void *)td);
+                tPool->add_task(t);
+
+                while (td->thread_id >= 0) {
+
+                }
+
+                //////////////////////////////////
             } else {
                 //case when there are 2 drivers in the same point, one drive is
                 //busy and the other one available(maybe we need change the
@@ -231,7 +257,7 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
     //active the clock!.
     this->time++;
     //THREAD
-    int rc;
+    //int rc;
     //pthread_t threadArr[this->drivers.size()];
 
     //move one step all the busy drivers
@@ -242,6 +268,7 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
             this->drivers[j]->goOn();
             numThread++;
 
+            /*
             //THREAD
             thread_data* td = new thread_data();
             saveTd.push_back(td);
@@ -252,9 +279,10 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
 
             //rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
 
-
+            cout << "befor fnuc" << endl;
             Task* t = new Task(&SLocThread, (void *)td);
             tPool->add_task(t);
+             */
             /*
             if (rc){
                 cout << "Error:unable to create thread," << rc << endl;
@@ -271,17 +299,14 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
             //if the driver finish the trip-- delete the trip
             if(!this->drivers[j]->isBusy()){
                 delete this->drivers[j]->getCurentTrip();
+                cout << "want delete saveTd (here/another place)" << endl;
             }
 
         }
 
     }
-    for (int i=0;i<numThread;i++) {
-        //pthread_mutex_lock(&myMutex);
-       // pthread_join(threadArr[i], NULL);
-        delete saveTd.at(i);
-        //pthread_mutex_unlock(&myMutex);
-    }
+
+
 
 
 
@@ -373,7 +398,6 @@ void * TaxiCenter::OpenThread(void* data) {
 }
 
 void  TaxiCenter::SLocThread(void* data) {
-
     struct thread_data* my_data;
     my_data = (struct thread_data*)data;
     Tcp* my_socket = my_data->socket;
@@ -387,5 +411,7 @@ void  TaxiCenter::SLocThread(void* data) {
     my_socket->sendData("server: sending location.",clDescriptor);
     taxiCenter->waitForCl(my_socket, clDescriptor);
     taxiCenter->sendDriverLocation(taxiCenter->drivers[id]->getLocation(),my_socket, clDescriptor);
+    my_data->thread_id = -1;
+
 
 }
