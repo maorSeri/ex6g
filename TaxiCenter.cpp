@@ -245,7 +245,7 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
             //THREAD
             thread_data* td = new thread_data();
             saveTd.push_back(td);
-`1  1            td->thread_id = j;
+            td->thread_id = j;
             td->taxiCenter = this;
             td->socket = socket;
 
