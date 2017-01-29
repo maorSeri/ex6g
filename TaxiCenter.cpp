@@ -124,6 +124,10 @@ void TaxiCenter::insertCab() {
         cab = new LuxuryCab(id, manufacturer, color);
     }*/
     cab=cabsValidation();
+    if(cab==NULL){
+        cout<<"-1"<<endl;
+        return;
+    }
     //adds the cab to the taxi station.
     this->cabs.push_back(cab);
 }
