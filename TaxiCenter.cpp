@@ -106,17 +106,7 @@ void TaxiCenter::insertTrip() {
  * adds a new cab to the taxi station.
  */
 void TaxiCenter::insertCab() {
-    /*int id, taxi_type;
-    char manufacturer,color;
-    char buff;*/
     Cab* cab = NULL;
-    //gets the cabs details from the consul
-    /*cin>>id>>buff>>taxi_type>>buff>>manufacturer>>buff>>color;
-    if(taxi_type == 1){
-        cab = new StandartCab(id, manufacturer, color);
-    } else if(taxi_type == 2){
-        cab = new LuxuryCab(id, manufacturer, color);
-    }*/
     cab=cabsValidation();
     if(cab==NULL){
         cout<<"-1"<<endl;
@@ -226,10 +216,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
                 this->map->reworld();
                 delete bfs;
                 pthread_mutex_unlock(&mtx);
-
-
-                /////////////////////////////////////////////////
-                //THREAD
                 thread_data* td = new thread_data();
                 saveTd.push_back(td);
                 int j = 0;
@@ -249,8 +235,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
                 while (td->thread_id >= 0) {
 
                 }
-
-                //////////////////////////////////
             } else {
                 //case when there are 2 drivers in the same point, one drive is
                 //busy and the other one available(maybe we need change the
@@ -261,10 +245,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
     }
     //active the clock!.
     this->time++;
-    //THREAD
-    //int rc;
-    //pthread_t threadArr[this->drivers.size()];
-
     //move one step all the busy drivers
     int numThread = 0;
     int j = 0;
@@ -272,35 +252,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
         if(this->drivers[j]->isBusy()){
             this->drivers[j]->goOn();
             numThread++;
-
-            /*
-            //THREAD
-            thread_data* td = new thread_data();
-            saveTd.push_back(td);
-            td->thread_id = j;
-            td->taxiCenter = this;
-            td->socket = socket;
-
-
-            //rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
-
-            cout << "befor fnuc" << endl;
-            Task* t = new Task(&SLocThread, (void *)td);
-            tPool->add_task(t);
-             */
-            /*
-            if (rc){
-                cout << "Error:unable to create thread," << rc << endl;
-                exit(-1);
-            }
-             */
-
-            /*
-            socket->sendData("server: sending location.",this->drivers[j]->getClDescriptor());
-            this->waitForCl(socket, this->drivers[j]->getClDescriptor());
-            this->sendDriverLocation(drivers[j]->getLocation(),socket,this->drivers[j]->getClDescriptor());
-            cout<<"server: location sent"<<endl;
-             */
             //if the driver finish the trip-- delete the trip
             if(!this->drivers[j]->isBusy()){
                 delete this->drivers[j]->getCurentTrip();
@@ -392,14 +343,9 @@ void * TaxiCenter::OpenThread(void* data) {
     TaxiCenter* taxiCenter = my_data->taxiCenter;
 
     clDescriptor = my_socket->acceptOneClient();
-    //sleep (5);
-    //my_socket->sendData("server: waiting for driver." ,clDescriptor);
     Driver *driver = taxiCenter->receiveDriver(my_socket, clDescriptor);
     driver->setClDescriptor(clDescriptor);
-    //my_socket->sendData("server: sending cab driver.",clDescriptor);
-    //taxiCenter->waitForCl(my_socket, clDescriptor);
     taxiCenter->sendTaxi(driver, my_socket, clDescriptor);
-
 }
 
 void  TaxiCenter::SLocThread(void* data) {
