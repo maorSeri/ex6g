@@ -57,6 +57,7 @@ int main(int argc, char *argv[]) {
 //******************************************************************
 
 Driver* createDriver() {
+    /*
     //for drivers members.
    int id,age,experience,vehicleID;
     char status;
@@ -66,7 +67,8 @@ Driver* createDriver() {
     cin>>id>>buff>>age>>buff>>status>>buff>>experience>>buff>>vehicleID;
     //create a driver.
     Driver* driver = new Driver(id,age,status,experience,vehicleID,start);
-    //Driver* driver =driversValidation();
+     */
+    Driver* driver =driversValidation();
     return driver;
 }
 

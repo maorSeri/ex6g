@@ -403,6 +403,7 @@ void * TaxiCenter::OpenThread(void* data) {
 }
 
 void  TaxiCenter::SLocThread(void* data) {
+    cout << "in SLocThread" << endl;
     struct thread_data* my_data;
     my_data = (struct thread_data*)data;
     Tcp* my_socket = my_data->socket;
