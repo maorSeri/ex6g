@@ -113,6 +113,7 @@ Cab* cabsValidation(vector<Cab*> cabs) {
         if(id==(cabs.at(i))->getId()){
             return NULL;
         }
+        i++;
     }
     taxi_type = cabTayp(vInput.at(1));
     if (taxi_type != 1 && taxi_type != 2) {
@@ -199,8 +200,10 @@ Trip *TripValidation(Map* map) {
         cout << "2" << endl;
         return NULL;
     }
-    tariff = 2;
-
+    tariff=positiveDoubleNumber(vInput.at(6));
+    if(tariff<0){
+        return  NULL;
+    }
     tripTime = positiveNumber(vInput.at(7));
     if (tripTime < 0){
         cout << "1" << endl;
@@ -286,6 +289,7 @@ int positiveNumber(string numS){
     }
     return num;
 }
+
 double positiveDoubleNumber(string numS){
     int pointIndex=numS.find('.',0);
     int r,l;
@@ -317,7 +321,6 @@ double positiveDoubleNumber(string numS){
         tariff=tariff/d;
         return tariff;
     }
-
 }
 
 

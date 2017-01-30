@@ -27,4 +27,5 @@ vector<string> splitInput(string input,char spliter);
 int positiveNumber(string numS);
 int cabTayp(string numS);
 char letterValid(string letter,char options[] ,int size);
+double positiveDoubleNumber(string numS);
 #endif //TESTEX6_INPUT_H
