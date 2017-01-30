@@ -34,14 +34,12 @@ vector<Trip*>TaxiCenter:: getVecTrips(){
  */
 void TaxiCenter::insertDriver(Tcp* socket) {
     //get amount of cabs.
-    //int clDescriptor;
     int amount;
     int rc;
     cin>>amount;
 
     //THREADS
     pthread_t threadArr[amount];
-    // struct thread_data td[amount];
     vector<thread_data*> saveTd;
     //receive driver from cline.
     for(int i=0;i<amount;i++) {
@@ -57,20 +55,6 @@ void TaxiCenter::insertDriver(Tcp* socket) {
             cout << "Error:unable to create thread," << rc << endl;
             exit(-1);
         }
-
-
-/*
-        clDescriptor = socket->acceptOneClient();
-        socket->sendData("server: waiting for driver.",clDescriptor);
-        Driver *driver = this->receiveDriver(socket, clDescriptor);
-        driver->setClDescriptor(clDescriptor);
-        cout << "server: driver received" << endl;
-        socket->sendData("server: sending cab driver.",clDescriptor);
-        this->waitForCl(socket, clDescriptor);
-        this->sendTaxi(driver, socket, clDescriptor);
-        cout << "server: cab sent" << endl;
-
-*/
 
     }
     for (int i=0;i<amount;i++) {
@@ -100,23 +84,15 @@ void TaxiCenter::insertTrip() {
     Trip* trip = new Trip(id,start,end,num_passengers,tariff,tripTime);
     //adds trip to the taxi station.
     this->trips.push_back(trip);
+
+    //Trip* trip = TripValidation(this->map);
 }
 
 /*
  * adds a new cab to the taxi station.
  */
 void TaxiCenter::insertCab() {
-    /*int id, taxi_type;
-    char manufacturer,color;
-    char buff;*/
     Cab* cab = NULL;
-    //gets the cabs details from the consul
-    /*cin>>id>>buff>>taxi_type>>buff>>manufacturer>>buff>>color;
-    if(taxi_type == 1){
-        cab = new StandartCab(id, manufacturer, color);
-    } else if(taxi_type == 2){
-        cab = new LuxuryCab(id, manufacturer, color);
-    }*/
     cab=cabsValidation();
     if(cab==NULL){
         cout<<"-1"<<endl;
@@ -227,8 +203,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
                 delete bfs;
                 pthread_mutex_unlock(&mtx);
 
-
-                /////////////////////////////////////////////////
                 //THREAD
                 thread_data* td = new thread_data();
                 saveTd.push_back(td);
@@ -240,17 +214,12 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
                 td->taxiCenter = this;
                 td->socket = socket;
 
-
-                //rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
-
                 Task* t = new Task(&SLocThread, (void *)td);
                 tPool->add_task(t);
 
                 while (td->thread_id >= 0) {
 
                 }
-
-                //////////////////////////////////
             } else {
                 //case when there are 2 drivers in the same point, one drive is
                 //busy and the other one available(maybe we need change the
@@ -261,10 +230,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
     }
     //active the clock!.
     this->time++;
-    //THREAD
-    //int rc;
-    //pthread_t threadArr[this->drivers.size()];
-
     //move one step all the busy drivers
     int numThread = 0;
     int j = 0;
@@ -272,35 +237,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
         if(this->drivers[j]->isBusy()){
             this->drivers[j]->goOn();
             numThread++;
-
-            /*
-            //THREAD
-            thread_data* td = new thread_data();
-            saveTd.push_back(td);
-            td->thread_id = j;
-            td->taxiCenter = this;
-            td->socket = socket;
-
-
-            //rc = pthread_create(&threadArr[j], NULL, SLocThread, (void *)td);
-
-            cout << "befor fnuc" << endl;
-            Task* t = new Task(&SLocThread, (void *)td);
-            tPool->add_task(t);
-             */
-            /*
-            if (rc){
-                cout << "Error:unable to create thread," << rc << endl;
-                exit(-1);
-            }
-             */
-
-            /*
-            socket->sendData("server: sending location.",this->drivers[j]->getClDescriptor());
-            this->waitForCl(socket, this->drivers[j]->getClDescriptor());
-            this->sendDriverLocation(drivers[j]->getLocation(),socket,this->drivers[j]->getClDescriptor());
-            cout<<"server: location sent"<<endl;
-             */
             //if the driver finish the trip-- delete the trip
             if(!this->drivers[j]->isBusy()){
                 delete this->drivers[j]->getCurentTrip();

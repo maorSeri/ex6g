@@ -31,6 +31,7 @@ void BFS::algorithm() {
                 (*pPoint).setFather(currentP);
                 (*pPoint).updateVisit();
             }
+
         }
         queueAl.pop();
         currentP = queueAl.front();
