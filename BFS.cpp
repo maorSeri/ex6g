@@ -26,9 +26,9 @@ void BFS::algorithm() {
         vector<Intersection*> neighbors = this->myMap->neighbors(currentP);
         int checkIfPointBlocked = -1;
         for(int i = 0; i < neighbors.size(); i++){
-            checkIfPointBlocked = 1;
             Intersection* pPoint = neighbors[i];
             if(!(*pPoint).isVisited()){
+                checkIfPointBlocked = 1;
                 queueAl.push(pPoint);
                 (*pPoint).setFather(currentP);
                 (*pPoint).updateVisit();
