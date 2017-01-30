@@ -76,12 +76,12 @@ Driver* driversValidation(){
         return NULL;
     }
     //experience chick
-    experience= positiveNumber(vInput.at(4));
+    experience= positiveNumber(vInput.at(3));
     if(experience<0){
         return NULL;
     }
     //vehicle ID chick.
-    vehicleID=positiveNumber(vInput.at(3));
+    vehicleID=positiveNumber(vInput.at(4));
     if(vehicleID<0){
         return NULL;
     }
