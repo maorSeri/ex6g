@@ -22,7 +22,7 @@ Driver* driversValidation();
 //
 Trip * TripValidation(Map*);
 //
-Cab* cabsValidation();
+Cab* cabsValidation(vector<Cab*> cabs);
 vector<string> splitInput(string input,char spliter);
 int positiveNumber(string numS);
 int cabTayp(string numS);

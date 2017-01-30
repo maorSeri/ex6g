@@ -93,7 +93,7 @@ void TaxiCenter::insertTrip() {
  */
 void TaxiCenter::insertCab() {
     Cab* cab = NULL;
-    cab=cabsValidation();
+    cab=cabsValidation(this->cabs);
     if(cab==NULL){
         cout<<"-1"<<endl;
         return;

@@ -90,7 +90,7 @@ Driver* driversValidation(){
     return d;
 }
 
-Cab* cabsValidation() {
+Cab* cabsValidation(vector<Cab*> cabs) {
     string input;
     //getline(cin, input);
     getline(cin, input);
@@ -104,6 +104,12 @@ Cab* cabsValidation() {
     id = positiveNumber(vInput.at(0));
     if (id < 0) {
         return NULL;
+    }
+    int i=0;
+    while(i<cabs.size()){
+        if(id==(cabs.at(i))->getId()){
+            return NULL;
+        }
     }
     taxi_type = cabTayp(vInput.at(1));
     if (taxi_type != 1 && taxi_type != 2) {
@@ -154,7 +160,7 @@ Trip *TripValidation(Map* map) {
     }
     startP = Point(x_start,y_start);
     start = map->getIntersect(&startP);
-    if(start->isObstacle()){
+    if(start==NULL||start->isObstacle()){
         return NULL;
     }
 
@@ -165,7 +171,11 @@ Trip *TripValidation(Map* map) {
     }
     endP = Point(x_end, y_end);
     end = map->getIntersect(&endP);
-    if(end->isObstacle()){
+    if(end==NULL||end->isObstacle()){
+        return NULL;
+    }
+    num_passengers = positiveNumber(vInput.at(5));
+    if (num_passengers <= 0) {
         return NULL;
     }
 
@@ -248,7 +258,39 @@ int positiveNumber(string numS){
     }
     return num;
 }
+double positiveDoubleNumber(string numS){
+    int pointIndex=numS.find('.',0);
+    int r,l;
+    if(pointIndex<0){
+        return positiveNumber(numS);
+    }
+    else{
+        string s1=numS.substr(0,pointIndex);
+        string s2=numS.substr(pointIndex+1,numS.size());
+        int k=s2.find('.',0);
+        if(k>=0){
+            return -1;
+        }
+        int l=positiveNumber(s1);
+        if(l<0){
+            return -1;
+        }
+        int r=positiveNumber(s2);
+        if(r<0){
+            return -1;
+        }
+        double d=10;
+        for(int i=0;i<(s2.size()-1);i++){
+            d=d*10;
+        }
+        double tariff;
+        tariff=l*d;
+        tariff+=r;
+        tariff=tariff/d;
+        return tariff;
+    }
 
+}
 
 
 int cabTayp(string numS){
