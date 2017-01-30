@@ -24,7 +24,9 @@ void BFS::algorithm() {
     //push the start intersection in to the queueAl.
     while(*currentP != *end){
         vector<Intersection*> neighbors = this->myMap->neighbors(currentP);
+        int checkIfPointBlocked = -1;
         for(int i = 0; i < neighbors.size(); i++){
+            checkIfPointBlocked = 1;
             Intersection* pPoint = neighbors[i];
             if(!(*pPoint).isVisited()){
                 queueAl.push(pPoint);
@@ -33,6 +35,11 @@ void BFS::algorithm() {
             }
 
         }
+        //if the point block
+        if (checkIfPointBlocked < 0){
+            return;
+        }
+
         queueAl.pop();
         currentP = queueAl.front();
     }

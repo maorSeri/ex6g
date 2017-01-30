@@ -2,6 +2,7 @@
 // Created by maor on 25/01/17.
 //
 #include "Input.h"
+#include "BFS.h"
 #include <vector>
 #include <iostream>
 #include <string>
@@ -15,9 +16,11 @@ using namespace std;
 bool lengthValidation(int amount,string input,char spleter) {
     int start=0;
     int count=0;
-    while(input.find(spleter,start)>=0&&(start+1<input.length())){
-        start=input.find(spleter,start)+1;
+    int index = input.find(spleter,start);
+    while(index>=0 && (start+1<input.length())){
+        start=index+1;
         count++;
+        index=input.find(spleter,start);
     }
     //bagging of validation of input
     if(count==amount)
@@ -138,6 +141,7 @@ Cab* cabsValidation(vector<Cab*> cabs) {
 
 //////////////////////////////////////////////////////////////////////////
 Trip *TripValidation(Map* map) {
+    Trip * trip = NULL;
     string input;
     getline(cin,input);
     vector<string> vInput;
@@ -146,43 +150,67 @@ Trip *TripValidation(Map* map) {
     Point startP, endP;
     Intersection *start, *end;
     if (!lengthValidation(7, input,',')) {
+        cout << "9" << endl;
         return NULL;
     }
     vInput = splitInput(input,',');
     id = positiveNumber(vInput.at(0));
     if (id < 0) {
+        cout << "8" << endl;
         return NULL;
     }
     x_start = positiveNumber(vInput.at(1));
     y_start = positiveNumber(vInput.at(2));
     if (x_start < 0 || y_start < 0){
+        cout << "7" << endl;
         return NULL;
     }
     startP = Point(x_start,y_start);
     start = map->getIntersect(&startP);
-    if(start==NULL||start->isObstacle()){
+    if(start == NULL || start->isObstacle()){
+        cout << "6" << endl;
         return NULL;
     }
 
     x_end = positiveNumber(vInput.at(3));
     y_end = positiveNumber(vInput.at(4));
     if (x_end < 0 || y_end < 0){
+        cout << "5" << endl;
         return NULL;
     }
     endP = Point(x_end, y_end);
     end = map->getIntersect(&endP);
-    if(end==NULL||end->isObstacle()){
-        return NULL;
-    }
-    num_passengers = positiveNumber(vInput.at(5));
-    if (num_passengers <= 0) {
+    if(end == NULL || end->isObstacle()){
+        cout << "4" << endl;
         return NULL;
     }
 
-/*
-    cin>>id>>buff>>x_start>>buff>>y_start>>buff>>x_end>>buff>>y_end>>buff
-       >>num_passengers>>buff>>tariff>>buff>>tripTime;
-       */
+    BFS* bfs = new BFS(map, start, end);
+    bfs->algorithm();
+    stack<Intersection *> path = bfs->getStackPath();
+    if (path.size() <= 0){
+        cout << "3" << endl;
+        return NULL;
+    }
+    map->reworld();
+    delete bfs;
+    num_passengers = positiveNumber(vInput.at(5));
+    if (num_passengers <= 0){
+        cout << "2" << endl;
+        return NULL;
+    }
+    tariff = 2;
+
+    tripTime = positiveNumber(vInput.at(7));
+    if (tripTime < 0){
+        cout << "1" << endl;
+        return NULL;
+    }
+
+
+    trip = new Trip(id, start, end, num_passengers, tariff, tripTime);
+    return trip;
+
 }
 /////////////////////////////////////////////////////////////////////////
 
