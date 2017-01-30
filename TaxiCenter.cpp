@@ -69,6 +69,7 @@ void TaxiCenter::insertDriver(Tcp* socket) {
  * adds a new trip to the taxi station
  */
 void TaxiCenter::insertTrip() {
+    /*
     int id,x_start,y_start,x_end,y_end,num_passengers,tripTime;
     double tariff;
     char buff;//buffer
@@ -84,8 +85,16 @@ void TaxiCenter::insertTrip() {
     Trip* trip = new Trip(id,start,end,num_passengers,tariff,tripTime);
     //adds trip to the taxi station.
     this->trips.push_back(trip);
+     */
 
-    //Trip* trip = TripValidation(this->map);
+    Trip* trip = TripValidation(this->map);
+    if (trip == NULL){
+        cout << "-1" << endl;
+        return;
+    }
+    //adds trip to the taxi station.
+    this->trips.push_back(trip);
+
 }
 
 /*
