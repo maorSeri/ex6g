@@ -19,6 +19,9 @@ using namespace std;
 Grid2D* gridsValidation();
 bool lengthValidation(int amount,string input,char spleter);
 Driver* driversValidation();
+//
+Trip * TripValidation(Map*);
+//
 Cab* cabsValidation();
 vector<string> splitInput(string input,char spliter);
 int positiveNumber(string numS);

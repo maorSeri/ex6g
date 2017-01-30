@@ -130,6 +130,53 @@ Cab* cabsValidation() {
     return c;
 }
 
+//////////////////////////////////////////////////////////////////////////
+Trip *TripValidation(Map* map) {
+    string input;
+    getline(cin,input);
+    vector<string> vInput;
+    int id,x_start,y_start,x_end,y_end,num_passengers,tripTime;
+    double tariff;
+    Point startP, endP;
+    Intersection *start, *end;
+    if (!lengthValidation(7, input,',')) {
+        return NULL;
+    }
+    vInput = splitInput(input,',');
+    id = positiveNumber(vInput.at(0));
+    if (id < 0) {
+        return NULL;
+    }
+    x_start = positiveNumber(vInput.at(1));
+    y_start = positiveNumber(vInput.at(2));
+    if (x_start < 0 || y_start < 0){
+        return NULL;
+    }
+    startP = Point(x_start,y_start);
+    start = map->getIntersect(&startP);
+    if(start->isObstacle()){
+        return NULL;
+    }
+
+    x_end = positiveNumber(vInput.at(3));
+    y_end = positiveNumber(vInput.at(4));
+    if (x_end < 0 || y_end < 0){
+        return NULL;
+    }
+    endP = Point(x_end, y_end);
+    end = map->getIntersect(&endP);
+    if(end->isObstacle()){
+        return NULL;
+    }
+
+/*
+    cin>>id>>buff>>x_start>>buff>>y_start>>buff>>x_end>>buff>>y_end>>buff
+       >>num_passengers>>buff>>tariff>>buff>>tripTime;
+       */
+}
+/////////////////////////////////////////////////////////////////////////
+
+
 Grid2D* gridsValidation(){
     string input;
     getline(cin, input);

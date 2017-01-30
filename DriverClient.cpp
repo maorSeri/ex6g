@@ -57,17 +57,6 @@ int main(int argc, char *argv[]) {
 //******************************************************************
 
 Driver* createDriver() {
-    /*
-    //for drivers members.
-   int id,age,experience,vehicleID;
-    char status;
-    char buff;
-    Point* start = new Point(0,0);
-    //gets the drivers details from the consul
-    cin>>id>>buff>>age>>buff>>status>>buff>>experience>>buff>>vehicleID;
-    //create a driver.
-    Driver* driver = new Driver(id,age,status,experience,vehicleID,start);
-     */
     Driver* driver =driversValidation();
     return driver;
 }
