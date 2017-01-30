@@ -151,38 +151,32 @@ Trip *TripValidation(Map* map) {
     Point startP, endP;
     Intersection *start, *end;
     if (!lengthValidation(7, input,',')) {
-        cout << "9" << endl;
         return NULL;
     }
     vInput = splitInput(input,',');
     id = positiveNumber(vInput.at(0));
     if (id < 0) {
-        cout << "8" << endl;
         return NULL;
     }
     x_start = positiveNumber(vInput.at(1));
     y_start = positiveNumber(vInput.at(2));
     if (x_start < 0 || y_start < 0){
-        cout << "7" << endl;
         return NULL;
     }
     startP = Point(x_start,y_start);
     start = map->getIntersect(&startP);
     if(start == NULL || start->isObstacle()){
-        cout << "6" << endl;
         return NULL;
     }
 
     x_end = positiveNumber(vInput.at(3));
     y_end = positiveNumber(vInput.at(4));
     if (x_end < 0 || y_end < 0){
-        cout << "5" << endl;
         return NULL;
     }
     endP = Point(x_end, y_end);
     end = map->getIntersect(&endP);
     if(end == NULL || end->isObstacle()){
-        cout << "4" << endl;
         return NULL;
     }
 
@@ -190,14 +184,12 @@ Trip *TripValidation(Map* map) {
     bfs->algorithm();
     stack<Intersection *> path = bfs->getStackPath();
     if (path.size() <= 0){
-        cout << "3" << endl;
         return NULL;
     }
     map->reworld();
     delete bfs;
     num_passengers = positiveNumber(vInput.at(5));
     if (num_passengers <= 0){
-        cout << "2" << endl;
         return NULL;
     }
     tariff=positiveDoubleNumber(vInput.at(6));
@@ -206,7 +198,6 @@ Trip *TripValidation(Map* map) {
     }
     tripTime = positiveNumber(vInput.at(7));
     if (tripTime < 0){
-        cout << "1" << endl;
         return NULL;
     }
 

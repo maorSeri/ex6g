@@ -30,7 +30,6 @@ ThreadPool::ThreadPool(int pool_size) {
         if (ret != 0) { /* error handling */ }
         m_threads.push_back(tid);
     }
-    cout << m_pool_size << " threads created by the thread pool" << endl;
 }
 
 

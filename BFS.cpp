@@ -35,11 +35,15 @@ void BFS::algorithm() {
             }
 
         }
+        /*
         //if the point block
-        if (checkIfPointBlocked < 0){
+        if (checkIfPointBlocked < 0 ){
             return;
         }
-
+         */
+        if(queueAl.empty()){
+            return;
+        }
         queueAl.pop();
         currentP = queueAl.front();
     }

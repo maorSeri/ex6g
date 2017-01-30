@@ -20,21 +20,16 @@ int main(int argc, char *argv[]) {
     //blabla
     Driver* driver = NULL;
     driver = createDriver();
-    cout<<"driver created"<<endl;
     if(driver!=NULL) {
         Tcp *socket = new Tcp(0, atoi(argv[2]));
         socket->initialize();
-        cout << "initialize" << endl;
         sendDriver(driver, socket);
-        cout << "driver sent" << endl;
         Cab *driversCab = NULL;
         driversCab = receiveCab(socket);
         driver->setTaxi(driversCab);
-        cout << "cab receved" << endl;
         Intersection *location = NULL;
         socket->sendData("client: I'm in receive state.");
         char task = getTask(socket);
-        cout << "task receved" << endl;
         while (task != 'Q') {
             socket->sendData("client: I'm in receive state.");
             location = receiveNewLocation(socket);
@@ -42,7 +37,6 @@ int main(int argc, char *argv[]) {
             driver->setLocation(location);
             socket->sendData("client: I'm in receive state.");
             task = getTask(socket);
-            cout << "task receved" << endl;
 
         }
         delete driver->getLocation();

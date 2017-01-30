@@ -116,10 +116,18 @@ void TaxiCenter::insertCab() {
  */
 void TaxiCenter::driverLocation() {
     int id_driver;
+    int i = 0;
     //gets the id of driver from the consul
     cin>>id_driver;
-    //returns the drivers loction
-    cout<<this->getDriver(id_driver)->getLocation()<<endl;
+    while (i<drivers.size()){
+        if (drivers.at(i)->getId() == id_driver){
+            cout<<this->getDriver(id_driver)->getLocation()<<endl;
+            return;
+        }
+        i++;
+    }
+    cout << "-1" << endl;
+
 }
 
 /*
@@ -251,7 +259,6 @@ void TaxiCenter::activateClock(Tcp* socket, ThreadPool* tPool) {
             //if the driver finish the trip-- delete the trip
             if(!this->drivers[j]->isBusy()){
                 delete this->drivers[j]->getCurentTrip();
-                cout << "want delete saveTd (here/another place)" << endl;
             }
 
         }
@@ -350,7 +357,6 @@ void * TaxiCenter::OpenThread(void* data) {
 }
 
 void  TaxiCenter::SLocThread(void* data) {
-    cout << "in SLocThread" << endl;
     struct thread_data* my_data;
     my_data = (struct thread_data*)data;
     Tcp* my_socket = my_data->socket;
